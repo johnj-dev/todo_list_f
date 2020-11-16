@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:todo_list_f/service/auth.dart';
 import 'package:todo_list_f/shared/constants.dart';
 import 'package:todo_list_f/shared/loading.dart';
@@ -91,6 +92,34 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 12.0),
+              SignInButton(
+                Buttons.FacebookNew,
+                onPressed: () async {
+                  setState(() => loading = true);
+                  dynamic result = await _auth.signInWithFacebook();
+                  if (result == null) {
+                    setState(() {
+                      error = 'could not sign in with those credentials';
+                      loading = false;
+                    });
+                  }
+                },
+                text: 'Sign in with Facebook',
+              ),
+              SignInButton(
+                Buttons.Google,
+                onPressed: () async {
+                  setState(() => loading = true);
+                  dynamic result = await _auth.signInWithGoogle();
+                  if (result == null) {
+                    setState(() {
+                      error = 'could not sign in with those credentials';
+                      loading = false;
+                    });
+                  }
+                },
+                text: 'Sign in with Google',
+              ),
               Text(
                 error,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
